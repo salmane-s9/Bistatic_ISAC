@@ -49,8 +49,10 @@ for snr_val in train_snr_values:
                                 include_2D_3D=True)
 
 # Creating Training DataFrame
-all_sim_df = pd.DataFrame()   
-for snr_value in tqdm.tqdm(train_snr_values):
+all_sim_df = pd.DataFrame()
+snr_bar = tqdm.tqdm(train_snr_values)
+snr_bar.set_description("Creating Training DataFrame")
+for snr_value in snr_bar:
    path_csv = f'./csv_data/Bistatic_data_with_ToA_Nrtargets_classif_{snr_value:d}_dB_df.csv'
    if os.path.exists(path_csv):
       tmp_df = pd.read_pickle(path_csv)

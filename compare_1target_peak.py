@@ -49,7 +49,9 @@ for snr_val in train_snr_values:
 
 # Creating Training DataFrame
 all_sim_df = pd.DataFrame()
-for snr_value in tqdm.tqdm([5, 15, 25, 30, 40]):
+snr_bar = tqdm.tqdm([5, 15, 25, 30, 40])
+snr_bar.set_description("Creating Training DataFrame")
+for snr_value in snr_bar:
    path_csv = f'./csv_data/Bistatic_data_with_ToA_1target_new_2D_{snr_value:d}_dB_df.csv'
    if os.path.exists(path_csv):
       tmp_df = pd.read_pickle(path_csv)
@@ -181,6 +183,12 @@ if not os.path.exists(PATH):
     print('Saving the model')
     torch.save(net.state_dict(), PATH)
 
+
+# Deleting all traininig variables
+try:
+    del isac_train_dataset, isac_train_dataloader, isac_test_dataset, isac_test_dataloader, net, history_test, df_train, df_test, all_sim_df, tmp_df, df_sim
+except: 
+    pass
 
 # Creating Test set 
 data_path = './data/Bistatic_data_with_ToA_1target_new_2D_test_with_CRB'

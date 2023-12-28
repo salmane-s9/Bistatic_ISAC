@@ -122,7 +122,9 @@ LR = 3e-4
 
 # Creating the Dataset
 all_sim_df = pd.DataFrame()
-for snr_value in tqdm.tqdm(train_snr_values):
+snr_bar = tqdm.tqdm(train_snr_values)
+snr_bar.set_description("Creating Training DataFrame")
+for snr_value in snr_bar:
    tmp_df = pd.read_pickle(f'./csv_data/Bistatic_data_with_ToA_3targets_new_2D_{snr_value:d}_dB_df.csv')
    tmp_df['TimeChannelEstimate_rav'] = tmp_df.TimeChannelEstimate.apply(np.ravel)
    tmp_df = tmp_df.sample(n=10)
@@ -156,14 +158,6 @@ isac_test_dataset = ISAC_rav_HH_Dataset(dataframe=df_test,
                                         sort_target=False,
                                         )
 isac_test_dataloader = DataLoader(isac_test_dataset, batch_size=128, shuffle=True, num_workers=0)
-
-for sample in isac_train_dataloader:
-   input = sample['input']
-   print('input: ', input.dtype)
-   print('input: ', input.shape)
-   print('Targets: ', sample['target'][:4])
-   break
-
 
 print(f'Training with Device: {device}')
 complex_model = HH2ComplexMLP(input_size=240, device=device, n_outputs=N_TARGETS)
