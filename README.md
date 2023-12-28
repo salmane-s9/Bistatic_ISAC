@@ -23,8 +23,9 @@ The scripts to run in MATLAB to generate the simulation data for training are:
 - Compare2TargetsPeak.m  
 
 ## Joint Estimation Results ##
-<!-- ![alt text](?raw=true ) -->
-<img src="https://github.com/salmane-s9/Bistatic_ISAC/blob/main/images/image_model.png" alt="drawing" width="200"/>
+
+![alt text](https://github.com/salmane-s9/Bistatic_ISAC/blob/main/images/image_model.png?raw=true =600*500)
+<!-- <img src="drawing.jpg" alt="drawing" width="200"/> -->
 
 ### SNR Analysis ###  
 
