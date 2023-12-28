@@ -24,8 +24,10 @@ The scripts to run in MATLAB to generate the simulation data for training are:
 
 ## Joint Estimation Results ##
 
-![alt text](https://github.com/salmane-s9/Bistatic_ISAC/blob/main/images/image_model.png?raw=true =600*500)
-<!-- <img src="drawing.jpg" alt="drawing" width="200"/> -->
+<p align="center">
+    <img src="https://github.com/salmane-s9/Bistatic_ISAC/blob/main/images/image_model.png" alt="drawing" width="600"/>
+</p>
+
 
 ### SNR Analysis ###  
 
