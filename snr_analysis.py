@@ -2,7 +2,6 @@
 This script plots the performance of the MLP architecture trained at different SNR values
 and used for prediction on a range of Test SNRs
 Simulation data are obtained by running the SNRAnalysis.m MATLAB script and saved as mat files.
-
 """
 
 import os
