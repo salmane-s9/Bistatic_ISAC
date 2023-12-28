@@ -27,7 +27,7 @@ K               = 10;                                               % no. of OFD
 qam             = 1024;                                               % [4,16,64,..] QAM modulation order
 
 % ========= SNR simulations used for Training ===================
-SNRdBTest = [5, 15, 25, 40];
+SNRdBTest = [5, 15, 20, 25, 30, 40];
 nsnr_tests = length(SNRdBTest);
 MC_ALT = 10000;
 q = 2; % number of targets in the scene

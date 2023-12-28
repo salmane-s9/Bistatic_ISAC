@@ -1,8 +1,6 @@
 % Figure 5:
-% Performance comparison of MLP with the 2D Estimation algorithm 
-% for both AoA and AoD angles for settings with two targets per peak
-% Generating training data, 2D Estimator results and CRB bounds
-% Classifying the number of targets in one peak.
+% Performance comparison of MLP Classfier architecture
+% Predicting the number of targets in one peak.
 
 % Creating Training Data
 clc

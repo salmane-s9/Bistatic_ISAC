@@ -1,0 +1,7 @@
+**/csv_data/
+**/data/
+**/models/
+**/results/
+*.ipynb
+*.mlx
+*.pyc

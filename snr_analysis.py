@@ -22,10 +22,10 @@ from torchvision import transforms
 import seaborn as sns
 from functools import partial 
 
-from .datasets import create_snr_analysis_dataset
-from .models import HH2ComplexMLP
-from .loaders import ISAC_rav_HH_Dataset, ToComplexMLPInputsTensor
-from .trainer import train_SNR_analysis, snr_analysis_comparison
+from datasets import create_dataset
+from models import HH2ComplexMLP
+from loaders import ISAC_rav_HH_Dataset, ToComplexMLPInputsTensor
+from trainer import train_SNR_analysis, snr_analysis_comparison
 
 import matplotlib
 matplotlib.rcParams['font.family'] = "DejaVu Sans"
@@ -46,18 +46,18 @@ for snr_val in train_snr_values:
     if ((not os.path.exists(csv_path)) and (os.path.exists(data_path))):
         if len(os.listdir(data_path))>=10000:
             print(f'SNR: {snr_val}\n')
-            df_sim = create_snr_analysis_dataset(data_path=data_path,  save_dir=csv_path,
-                                                 columns_to_include=['TimeChannelEstimate', 'ChannelIFFT'], include_2D_3D=True)
+            df_sim = create_dataset(data_path=data_path,  save_dir=csv_path,
+                                    columns_to_include=['TimeChannelEstimate', 'ChannelIFFT'], include_2D_3D=True)
             
 
 # Training Models on specific SNRs
+
 N_TARGETS = 6
 N_EPOCHS = 200
 LR = 3e-4
-
 for snr_value in train_snr_values:
     model_name = f'Bistatic_3D_NEW_joint_AoA_AoD_{snr_value:d}bB'
-
+    PATH = f'./models/{model_name}.pt'
     if not f'{model_name}.pt' in os.listdir('./models/'):
         print(f'Trainin on SNR={snr_value} dB\n')
         all_sim_df = pd.read_pickle(f'./csv_data/Bistatic_data_with_ToA_3targets_new_2D_{snr_value:d}_dB_df.csv')
@@ -113,7 +113,6 @@ for snr_value in train_snr_values:
 
         # Save the model
         print('Saving the model')
-        PATH = f'./models/{model_name}.pt'
         torch.save(net.state_dict(), PATH)
 
 
@@ -166,31 +165,33 @@ for sample in isac_train_dataloader:
    print('Targets: ', sample['target'][:4])
    break
 
+
 print(f'Training with Device: {device}')
 complex_model = HH2ComplexMLP(input_size=240, device=device, n_outputs=N_TARGETS)
 # Train the model
-complex_model = complex_model.to(device)
+complex_model = complex_model.to(device)    
 
-net, history_test = train_SNR_analysis(
-                          complex_model ,
-                          isac_train_dataloader,
-                          isac_test_dataloader,
-                          epochs=N_EPOCHS,
-                          test_metric='rad_mse',
-                          lr=LR,
-                          plot_save_dir='./results/Bistatic_3D_NEW_joint_AoA_AoD_mixedbB.png',
-                          save_directory='./models/Bistatic_3D_NEW_joint_AoA_AoD_mixedbB',
-                          n_epochs_save_model=120,
-                          multi_label=True,
-                          multi_target=True,
-                          use_schedulers=False,
-                          n_outputs=N_TARGETS,
-                      )
-
-# Save the model
-print('Saving the model')
 PATH = './models/Bistatic_3D_NEW_joint_AoA_AoD_mixedbB.pt'
-torch.save(net.state_dict(), PATH)
+if not os.path.exists(PATH):
+    net, history_test = train_SNR_analysis(
+                            complex_model ,
+                            isac_train_dataloader,
+                            isac_test_dataloader,
+                            epochs=N_EPOCHS,
+                            test_metric='rad_mse',
+                            lr=LR,
+                            plot_save_dir='./results/Bistatic_3D_NEW_joint_AoA_AoD_mixedbB.png',
+                            save_directory='./models/Bistatic_3D_NEW_joint_AoA_AoD_mixedbB',
+                            n_epochs_save_model=120,
+                            multi_label=True,
+                            multi_target=True,
+                            use_schedulers=False,
+                            n_outputs=N_TARGETS,
+                        )
+
+    # Save the model
+    print('Saving the model')
+    torch.save(net.state_dict(), PATH)
 
 
 # Plotting Test results

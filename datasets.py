@@ -4,7 +4,7 @@ import scipy.io as sio
 import pandas as pd
 import numpy as np
 
-def create_snr_analysis_dataset(data_path, save_dir, columns_to_include=None, include_2D_3D=False, include_CRB=False):
+def create_dataset(data_path, save_dir, columns_to_include=None, include_2D_3D=False, include_CRB=False):
 
   def get_by_keyword(mat_struct, key_words):
     return dict((kw, mat_struct[kw][0,0].ravel()) for kw in key_words)
@@ -81,3 +81,6 @@ def create_snr_analysis_dataset(data_path, save_dir, columns_to_include=None, in
   df_sim.to_pickle(save_dir)
 
   return df_sim 
+
+
+
