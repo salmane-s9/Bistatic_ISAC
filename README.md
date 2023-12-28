@@ -28,21 +28,18 @@ The scripts to run in MATLAB to generate the simulation data for training are:
     <img src="https://github.com/salmane-s9/Bistatic_ISAC/blob/main/images/image_model.png" alt="drawing" width="600"/>
 </p>
 
-
 ### SNR Analysis ###  
 
 This script plots the performance of the MLP architecture trained at different SNR values and used for prediction on a range of Test SNRs (Figure. 4)
 ```bash
 python snr_analysis.py 
 ```
-
 ### Number of Targets classification ###  
 
 This script plots the performance of the MLP Classfier architecture for predictiing the number of targets in one peak (Figure. 5)
 ```bash
 python classif_ntargets.py 
 ```
-
 ### Joint AoA-AoD predictions ###  
 
 This script plots the performance comparison of MLP and convolutional networks with the parametric 2D Estimation algorithm for AoA estimation (Figure. 6)
